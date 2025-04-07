@@ -1,0 +1,13 @@
+.MainForm1{
+    width: 100%;
+
+}
+
+.Header{
+    display: flex;
+    justify-content: end;
+}
+.MainFormBody{
+    width: 100%;
+    height: 100%;
+}

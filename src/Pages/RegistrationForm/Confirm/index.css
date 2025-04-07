@@ -1,0 +1,159 @@
+.MainForm{
+    width:80%;
+    display: flex;
+    justify-self: center;
+    margin-top: 20px;
+    flex-direction: column;
+    height: 100%;
+}
+
+
+.table-container {
+    overflow-x: auto;
+  }
+  
+  .custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  .custom-table th,
+  .custom-table td {
+    padding: 12px;
+    text-align: left;
+  }
+  
+  .custom-table th {
+    color:#d00d27;
+    border-left: none;
+    border-right: none;
+    font-weight: 500;
+    border-top: none;
+  }
+  
+
+  
+  .custom-table td {
+    font-size: 14px;
+    border-left: none;
+    border-right: none;
+    border-top:  1px solid rgb(175, 172, 172);
+
+  }
+  .Row{
+    border: none;
+  }
+  .usdtd{
+    border-bottom: none;
+  }
+/* 
+  .Grid{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+.Grid div{
+    border: 1px solid black;
+    padding: 10px;
+    width: 45%;
+    background-color: #d00d27;
+    margin-top: 5px;
+} */
+
+.Grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+    width: 100%;
+
+}
+.Grid div{
+    padding: 10px;
+    /* margin-top: 5px; */
+}
+
+.FormHeader{
+    width: 100%;
+    display: flex;
+    gap: 40px;
+    height: 100%;
+    margin-top: 15px;
+}
+
+.listitem{
+    list-style: none;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight:500 ;
+    color: #1F384C;
+    border-bottom:3px solid transparent;
+
+}
+.listitem:hover{
+
+    color: red;
+    border-bottom:3px solid red;
+}
+.ActiveLi{
+    color: red;
+    border-bottom:3px solid red;
+    list-style: none;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight:500 ;
+    border-bottom:3px solid red;
+}
+
+.AccFormDiv{
+    width: 100%;
+    
+}
+
+.AccFormGrid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    width: 100%;
+    
+
+}
+
+.AccFormGrid div{
+    padding: 10px;
+
+    margin-top: 5px;
+}
+
+.form-data{
+    margin-top: 5px;
+}
+
+
+.GridListItem li {
+    color: #000; 
+    list-style-type: none; 
+    position: relative;
+    margin-right: 10px;
+}
+
+.GridListItem li::before {
+    content: '•';
+   
+    color: #d00d27; 
+    font-size: 24px; 
+    position: absolute;
+    left: -10px;
+    top: -5px; 
+}
+
+@media (max-width:600) {
+  
+    .table-container {
+      /* padding: 50px; */
+      overflow-x: auto;
+      background-color: #d00d27;
+    }
+}

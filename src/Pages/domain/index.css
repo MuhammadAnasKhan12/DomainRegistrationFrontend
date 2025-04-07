@@ -1,0 +1,9 @@
+.SearchDiv{
+    display: flex;
+
+}
+
+.SearchBtnText{
+    display: flex;
+    font-size: 18px;
+}

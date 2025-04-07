@@ -1,0 +1,116 @@
+.MainFormBody{
+    width: 100%;
+    height: 100%;
+}
+.MainFormHead{
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    font-size: 14px;
+    color: grey;
+
+}
+
+.MainBody{
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;;
+}
+.LeftCol,.RightCol{
+    width: 100%;
+}
+.InputFields{
+    width: 100%;
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+.InputFields p{
+    margin-bottom: 8px;
+    /* font-size: 14px; */
+    color: gray;
+}
+.InputFields p span{
+    color:red;
+    font-weight: 800;
+}
+.InputField{
+    padding: 12px;
+    font-size: 14px;
+    height: 56px;
+    border: 1px solid rgb(191, 191, 191);
+    border-radius:5px ;
+    width: 100%;
+}
+
+
+.SelectDiv{
+    display: flex;
+    justify-content: space-between;
+    }
+.SelectDiv select{
+    width: 30%;
+    padding: 10px;
+    border: 1px solid rgb(239, 239, 239);
+    border-radius:6px ;
+    background-color: #f2f2f2;
+}
+.SelectDiv input{
+    width: 68%;
+}
+
+
+.CountyDiv{
+        /* padding: 12px;
+        font-size: 14px;
+        height: 56px;
+        border: 1px solid rgb(191, 191, 191); */
+    border-radius:5px ;
+    width: 100%;
+}
+.GridTemp{
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;  
+
+}
+.Header{
+    display: flex;
+    justify-self: end;
+}
+
+
+@media (max-width: 600px) {
+    .Header{
+        display: flex;
+        justify-self: start;
+        margin-top: 10px;
+    }
+    .MainFormHead{
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        align-items: flex-start;
+        font-size: 14px;
+        color: grey;
+    
+    }
+    .MainBody{
+        width: 100%;
+        height: 100%;
+        display: grid;
+        grid-template-columns: 1fr ;
+        gap: 30px;
+    }
+    .GridTemp{
+        width: 100%;
+        height: 100%;
+        display: grid;
+        grid-template-columns: 1fr ;
+        gap: 30px;  
+    }
+    
+  }

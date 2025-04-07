@@ -1,0 +1,31 @@
+.custom-stepper {
+    border-bottom: 2px solid #ccc;
+  }
+  
+  .custom-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .custom-step-label {
+    font-size: 16px;
+    font-weight: normal;
+    color: gray;
+    transition: color 0.3s ease;
+  }
+  
+  .custom-step-label-active {
+    color: blue;
+    font-weight: bold;
+}
+
+  .custom-stepper .MuiStepIcon-root {
+    border-radius: 50%;
+    border: 2px solid rgb(236, 9, 9);
+  }
+  
+  .custom-stepper .MuiStepIcon-completed {
+    background-color: #4caf50; 
+  }
+  

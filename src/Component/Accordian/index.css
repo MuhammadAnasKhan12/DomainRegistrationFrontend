@@ -1,0 +1,107 @@
+.AccordianContent{
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+}
+
+.CheckBoxDiv{
+    width: 100%;
+    margin-bottom: 20px;
+    background-color:#eeee;
+    height:55px;
+    display: flex;
+    align-items: center;
+}
+.NSBtns{
+    width: 100%;
+    display: flex;
+    gap: 20px;
+    font-size: 16px;
+}
+/* .NSBtns button{
+    padding: 5px;
+    background-color: transparent;
+    border: 1px solid rgba(0, 0, 0, 0.40);
+    cursor: pointer;
+} */
+
+.WebNICDiv{
+    margin-top: 20px;
+    width: 100%;
+}
+.CustomNS{
+    margin-top: 20px;
+    
+}
+.AddNSBtn{
+    width: 100%;
+    background-color: transparent;
+    color: green;
+    border: 1px solid green;
+    padding: 5px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.nsinputdiv{
+    display: flex;
+    height: 100%;
+    width: 100%;
+    margin-bottom: 10px;
+    
+}
+.nsinputdiv input{
+    width: 90%;
+    padding: 5px;
+    border-radius: 6px 0px 0px 6px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    padding: 10px;
+}
+.nsinputdiv input:focus{
+    border: 1px solid red;
+}
+.nsinputdiv button{
+    width: 10%;
+    padding: 2px;
+    color: red;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 0px 5px 5px 0px;
+    cursor: pointer;
+}
+
+.CreateBtn{
+    border: none;
+    background-color: #1F384C;
+    color: white;
+    padding: 10px 10px;
+    width: 100px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.RegistrantBtnDiv{
+    display: flex;
+    justify-content: end;
+}
+
+.usernameInputField{
+    width: 100%;
+    border-radius: 6px ;
+    border: 1px solid #0000001f;
+    padding: 16px;
+    margin-top: 6px;
+    color: #989695;
+    font-size: 14px;
+}
+
+.SelectwebnicNs{
+    width: 100%;
+   padding: 6px;
+   cursor: pointer;
+   border-radius: 5px; 
+   border: 1px solid #0000001f;
+
+}
+
+.SelectwebnicNs option{
+    font-size: 11px;
+}
