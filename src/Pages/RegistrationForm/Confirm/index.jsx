@@ -106,7 +106,7 @@ function AccordionUsage({Data}) {
                 </AccordionSummary>
                 <AccordionDetails>
                     <div className="Grid">
-                        {console.log("dadadad",Data)}
+                        {/* {console.log("dadadad",Data)} */}
                         {
                         Data.nsList.map((x,i)=>(
                             <div className="GridListItem"><li><Typography>{x.nsUrl}</Typography></li></div>
@@ -165,7 +165,7 @@ function AccordionUsage({Data}) {
 
 
 const Confirm = ({formdata}) => {
-    console.log("abasasd",formdata)
+    // console.log("abasasd",formdata)
 
     return (
         <>
@@ -181,7 +181,7 @@ const Confirm = ({formdata}) => {
                         </thead>
                         <tbody >
                             <tr>
-                                <td><Typography sx={{ fontSize: { xs: '12px', sm: '14px', md: '15px' } }} style={{ fontWeight: "600" }}>{Data.domainName}</Typography></td>
+                                <td><Typography sx={{ fontSize: { xs: '12px', sm: '14px', md: '15px' } }} style={{ fontWeight: "600" }}>{formdata.domainName}</Typography></td>
                                 <td><Typography sx={{ fontSize: { xs: '12px', sm: '14px', md: '15px' } }}>{`USD 5.00`}</Typography></td>
                             </tr>
                             <tr className="Row">

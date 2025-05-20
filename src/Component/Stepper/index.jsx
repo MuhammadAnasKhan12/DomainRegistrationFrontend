@@ -67,6 +67,16 @@ QontoStepIcon.propTypes = {
   completed: PropTypes.bool,
 };
 
+function ColorlibStepIcon(props) {
+  const { active, completed, className } = props;
+
+  return (
+    <ColorlibStepIconRoot ownerState={{ completed, active }} className={className}>
+      {completed ? <Check /> : props.icon}
+    </ColorlibStepIconRoot>
+  );
+}
+
 const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.alternativeLabel}`]: {
     top: 22,
@@ -74,13 +84,13 @@ const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.active}`]: {
     [`& .${stepConnectorClasses.line}`]: {
       backgroundImage:
-        'linear-gradient( 95deg,rgb(242, 33, 68) 0%,rgb(208, 13, 39) 50%,rgb(221, 5, 5) 100%)',
+      'linear-gradient( 95deg,"#1F384C" 0%,"#1F384C" 50%,"#1F384C" 100%)',
     },
   },
   [`&.${stepConnectorClasses.completed}`]: {
     [`& .${stepConnectorClasses.line}`]: {
       backgroundImage:
-      'linear-gradient( 95deg,rgb(242, 33, 68) 0%,rgb(208, 13, 39) 50%,rgb(221, 5, 5) 100%)',
+      'linear-gradient( 95deg,"#1F384C" 0%,"#1F384C" 50%,"#1F384C" 100%)',
     },
   },
   [`& .${stepConnectorClasses.line}`]: {
@@ -94,7 +104,44 @@ const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
   },
 }));
 
-const ColorlibStepIconRoot = styled('div')(({ theme }) => ({
+
+
+// const ColorlibStepIconRoot = styled('div')(({ theme }) => ({
+//   backgroundColor: '#ccc',
+//   zIndex: 1,
+//   color: '#fff',
+//   width: 50,
+//   height: 50,
+//   display: 'flex',
+//   borderRadius: '50%',
+//   justifyContent: 'center',
+//   alignItems: 'center',
+//   ...theme.applyStyles('dark', {
+//     backgroundColor: theme.palette.grey[700],
+//   }),
+//   variants: [
+//     {
+//       props: ({ ownerState }) => ownerState.active,
+//       style: {
+//         backgroundImage:
+//         'linear-gradient( 95deg,rgb(242, 33, 68) 0%,rgb(208, 13, 39) 50%,rgb(221, 5, 5) 100%)',
+//         boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)',
+//       },
+//     },
+//     {
+//       props: ({ ownerState }) => ownerState.completed,
+//       style: {
+//         backgroundImage:
+//         'linear-gradient( 95deg,rgb(242, 33, 68) 0%,rgb(208, 13, 39) 50%,rgb(221, 5, 5) 100%)',
+//       },
+//     },
+//   ],
+// }));
+
+
+const ColorlibStepIconRoot = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'ownerState',
+})(({ theme, ownerState }) => ({
   backgroundColor: '#ccc',
   zIndex: 1,
   color: '#fff',
@@ -104,44 +151,33 @@ const ColorlibStepIconRoot = styled('div')(({ theme }) => ({
   borderRadius: '50%',
   justifyContent: 'center',
   alignItems: 'center',
-  ...theme.applyStyles('dark', {
-    backgroundColor: theme.palette.grey[700],
+  ...(ownerState.active && {
+    backgroundColor: '#1F384C',
+    boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)',
   }),
-  variants: [
-    {
-      props: ({ ownerState }) => ownerState.active,
-      style: {
-        backgroundImage:
-        'linear-gradient( 95deg,rgb(242, 33, 68) 0%,rgb(208, 13, 39) 50%,rgb(221, 5, 5) 100%)',
-        boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)',
-      },
-    },
-    {
-      props: ({ ownerState }) => ownerState.completed,
-      style: {
-        backgroundImage:
-        'linear-gradient( 95deg,rgb(242, 33, 68) 0%,rgb(208, 13, 39) 50%,rgb(221, 5, 5) 100%)',
-      },
-    },
-  ],
+  ...(ownerState.completed && {
+    backgroundColor: '#1F384C',
+  }),
 }));
 
-function ColorlibStepIcon(props) {
-  const { active, completed, className } = props;
 
-  const icons = {
+
+// function ColorlibStepIcon(props) {
+//   const { active, completed, className } = props;
+
+//   const icons = {
     
-    1:"1",
-    2:"2",
-    3:"3"
-  };
+//     1:"1",
+//     2:"2",
+//     3:"3"
+//   };
 
-  return (
-    <ColorlibStepIconRoot ownerState={{ completed, active }} className={className}>
-      {icons[String(props.icon)]}
-    </ColorlibStepIconRoot>
-  );
-}
+//   return (
+//     <ColorlibStepIconRoot ownerState={{ completed, active }} className={className}>
+//       {icons[String(props.icon)]}
+//     </ColorlibStepIconRoot>
+//   );
+// }
 
 ColorlibStepIcon.propTypes = {
   /**

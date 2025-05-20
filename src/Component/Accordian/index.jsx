@@ -39,7 +39,7 @@ function BasicSelect({ listitem ,handleRegistrantId}) {
     };
 
     return (
-        <Box sx={{ minWidth: "100%" }}>
+        <Box sx={{ minWidth: "100%",fontSize:"14px" }}>
             <FormControl fullWidth>
                 <Select
                     value={registrant}

@@ -15,11 +15,12 @@ const WhoisInformation=({handleFormData})=>{
 
         
     }   
-    
+      
     
 
     const [FormData,setFormData] = useState({
         Registrant:{
+          category:"Registrant",
           company: "",
           firstname: '',
           lastname: '',
@@ -37,6 +38,8 @@ const WhoisInformation=({handleFormData})=>{
           organizationRegistrationNumber: '',
       },
         Admin:{
+          category:"Admin",
+
           company: "",
           firstname: '',
           lastname: '',
@@ -54,6 +57,8 @@ const WhoisInformation=({handleFormData})=>{
           organizationRegistrationNumber: '',
       },
         Technical:{
+          category:"Technical",
+
           company: "",
           firstname: '',
           lastname: '',
@@ -71,6 +76,7 @@ const WhoisInformation=({handleFormData})=>{
           organizationRegistrationNumber: '',
       },
         Billing:{
+          category:"Billing",
           company: "",
           firstname: '',
           lastname: '',

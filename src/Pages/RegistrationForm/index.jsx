@@ -10,6 +10,8 @@ import Confirm from "./Confirm";
 import RegisterDomainFooter from "../../Component/RegisterDomainFooter";
 import { toast, ToastContainer } from 'react-toastify'; 
 import 'react-toastify/dist/ReactToastify.css'; 
+import axios from "axios";
+import apiInstance from "../ApiInstance";
 
 const DomainRegistrationForm = () => {
   const [activeStep, setActiveStep] = useState(0);
@@ -22,7 +24,7 @@ const DomainRegistrationForm = () => {
   const [btndisable, setbtndisable] = useState(true);
   const [formData, setFormData] = useState({});
   const [footerData, setFooterData] = useState("");
-
+  const [completeDomainData,setcompleteDomainData] = useState({});
   const buttonDisable1 = (x) => {
     setbtndisable(x);
   }
@@ -48,7 +50,6 @@ const DomainRegistrationForm = () => {
   const validateFormData = (requiredFields) => {
   
 
-    // Check if all required fields are present and have valid values (not null or undefined)
 
 
     for (let field of requiredFields) {
@@ -73,8 +74,7 @@ const DomainRegistrationForm = () => {
     return true;
   }
 
-  const getFormData = () => {
-    // Perform validation before moving to the next step
+  const  getFormData  = async() => {
 
     if(activeStep ===0){
       let list = ["nsList","RegistrantId"]
@@ -91,15 +91,58 @@ const DomainRegistrationForm = () => {
       ]
       const isValid = validateFormData(list);
       if (isValid) {
-        handleNext();
+        try {
+          const [registrantResponse,adminResponse,technicalResponse,billingResponse] =await Promise.all(
+            [
+              apiInstance.post('registerDomainFormFields', { form:formData["Registrant"] }),
+              apiInstance.post('registerDomainFormFields', { form:formData["Admin"] }),
+              apiInstance.post('registerDomainFormFields', { form:formData["Technical"] }),
+              apiInstance.post('registerDomainFormFields', { form:formData["Billing"] }),
+
+            ]
+          )
+
+          setFormData((prevData) => ({
+            ...prevData,
+            RegistrantId: registrantResponse.data.id,
+            AdminId: adminResponse.data.id,
+            TechnicalId: technicalResponse.data.id,
+            BillingId: billingResponse.data.id,
+          }));
+        
+          handleNext();
+        } catch (error) {
+            console.log("Error in posting fields data",error)
+        }
       }
-    }else{
-      let list = [
-        "terms",
-        "language"
-      ]
+    } else {
+      let list = ["terms", "language"];
       const isValid = validateFormData(list);
+    
       if (isValid) {
+        const finalDomainData = {
+          RegistrantId: formData["RegistrantId"],
+          AdminId: formData["AdminId"],
+          TechnicalId: formData["TechnicalId"],
+          BillingId: formData["BillingId"], 
+          domainName: formData["domainName"],
+          WhoisPrivacy: formData["WhoisPrivacy"],
+          registrationAgreementCheck: formData["registrationAgreementCheck"],
+          acceptedFAQ: formData["acceptedFAQ"],
+          nsList: formData["nsList"],
+          terms: formData["terms"],
+          language: formData["language"]
+        };
+    
+        setcompleteDomainData(finalDomainData); 
+    
+        try {
+          const domainRes = await apiInstance.post("registerDomain", { form: finalDomainData });
+          console.log("Response after completing whole form:", domainRes);
+        } catch (error) {
+          console.log("Error in submitting the full domain form", error);
+        }
+    
         handleNext();
       }
     }
@@ -108,8 +151,16 @@ const DomainRegistrationForm = () => {
   }
 
   const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    if(activeStep <3 ){
+
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    }else{
+      setActiveStep(2)
+    }
   };
+
+
+  
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -155,7 +206,7 @@ const DomainRegistrationForm = () => {
                       variant="contained"
                       color="primary"
                       sx={{ backgroundColor: "#1F384C", color: "white" }}
-                      onClick={getFormData} 
+                      onClick={getFormData } 
                       disabled={btndisable || activeStep === steps.length - 1}
                       >
                       Next
@@ -167,7 +218,7 @@ const DomainRegistrationForm = () => {
                 variant="contained"
                 color="primary"
                 sx={{ backgroundColor: "#1F384C", color: "white" }}
-                onClick={activeStep === 2 ? getFormData : handleNext}
+                onClick={activeStep === 2 ?  getFormData  : handleNext}
               >
                 Submit
               </Button>
