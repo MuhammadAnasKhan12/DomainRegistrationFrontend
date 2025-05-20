@@ -26,6 +26,13 @@ const RegisterDomainFooter = React.memo(({getDomainTermsLang})=>{
         "5 Year(s)",
 
     ]
+     const language = [
+        "English",
+        "French",
+        "Urdu",
+        
+
+    ]
     return (
         <>
             <Box className={"RegisterFooter"}  >
@@ -63,8 +70,8 @@ const RegisterDomainFooter = React.memo(({getDomainTermsLang})=>{
                         }}
                     ><Typography sx={{ fontSize: "14px" }}>{`Language: `}</Typography>
                         <select onChange={(e) => HandleTermsChange("language",e.target.value)} style={{  marginLeft: "4px" }} className="FooterSelect" defaultValue={"English"}>
-                            {years.map((year, i) => (
-                                <option>{year}</option>
+                            {language.map((lang, i) => (
+                                <option key={i}>{lang}</option>
                             ))}
                         </select>
                     </Box>

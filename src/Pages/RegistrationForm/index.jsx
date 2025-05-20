@@ -12,8 +12,10 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; 
 import axios from "axios";
 import apiInstance from "../ApiInstance";
+import { useNavigate } from "react-router-dom";
 
 const DomainRegistrationForm = () => {
+  const navigate = useNavigate();
   const [activeStep, setActiveStep] = useState(0);
   const steps = [
     'Review & Checkout',
@@ -49,7 +51,8 @@ const DomainRegistrationForm = () => {
 
   const validateFormData = (requiredFields) => {
   
-
+console.log(formData)
+console.log(footerData)
 
 
     for (let field of requiredFields) {
@@ -142,7 +145,8 @@ const DomainRegistrationForm = () => {
         } catch (error) {
           console.log("Error in submitting the full domain form", error);
         }
-    
+        toast.success("Login Successfully");
+        navigate("/domainList")
         handleNext();
       }
     }
@@ -179,13 +183,18 @@ const DomainRegistrationForm = () => {
 
           <div className="borderBtmDiv">
             <div className="borderbottom"></div>
+            {/* form registration pages  */}
           </div>
           {
+            // form page1
             activeStep === 0 ? (
+              
               <ReviewAndCheckout handleFormData={handleFormData} buttonDisable={buttonDisable1} />
             ) : activeStep === 1 ? (
+              //form page2
               <WhoisInformation handleFormData={handleFormData} />
             ) : (
+              //form page3
               <Confirm formdata={formData} />
             )
           }

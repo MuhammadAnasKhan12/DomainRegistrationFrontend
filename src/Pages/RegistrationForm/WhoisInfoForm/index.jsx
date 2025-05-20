@@ -126,6 +126,7 @@ const WhoisInformation=({handleFormData})=>{
     return(
         
         <>
+        {/* states of contact form */}
 <div className="MainForm">
       <div className="FormHeader">
         {Formss.map((form, index) => (

@@ -3,15 +3,12 @@
     margin: 0;
 }
 .FullScreen{
-    /* width: 100vw; */
+    width: 100vw;
     height: 100vh;
-    background-color:white; 
-    /* display:flex ; */
-  
+    display:flex ;
 }
 .MainDiv{
     padding: 20px;
-    border: 1px solid black;
     border-radius:7px;
     /* width: 100%;
     height: 100%; */
@@ -24,14 +21,27 @@
 }
 
 .LeftSidefs{
-    width: 100%;
+    width: 50%;
     height: 100%;
-    border: 1px solid black;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 .RightSide{
+    width: 50%;
+    height:100%;
+}
+.RightSide div{
     width: 100%;
     height: 100%;
+  background-color: #0a0a93;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.LeftContent {
+  text-align: center;
+  color: white;
 }

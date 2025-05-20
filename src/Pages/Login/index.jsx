@@ -82,7 +82,7 @@ const LoginPage = () => {
                       />
                     </Grid>
 
-                    <Grid sx={{ marginTop: "-20px" }} item>
+                    <Grid sx={{ marginTop: "-20px",mt:"1px" }} item>
                       <p>Don't have an account? | <span onClick={() => navigate("/signup")} style={{ color: "blue", cursor: "pointer" }}>Sign Up</span> </p>
                     </Grid>
 
@@ -108,7 +108,14 @@ const LoginPage = () => {
         </Container>
       </div>
       <div className='RightSide'>
-
+                <Box className="LeftContent">
+                  <Typography variant="h3" color="white" fontWeight="bold">
+                    Welcome!
+                  </Typography>
+                  <Typography variant="h6" color="white">
+                    Sign in to get started
+                  </Typography>
+                </Box>
       </div>
     </div>
   );
