@@ -30,7 +30,6 @@
 }
 .ActiveLi{
     color: red;
-    border-bottom:3px solid red;
     list-style: none;
     cursor: pointer;
     font-size: 15px;
@@ -42,4 +41,7 @@
     .MainForm{
         width: 100%;
     }
+}
+.list{
+    list-style: none;
 }

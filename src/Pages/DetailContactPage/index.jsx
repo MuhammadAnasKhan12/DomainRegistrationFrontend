@@ -1,10 +1,11 @@
 
 import React, { useEffect, useState } from "react";
-import { Box, Grid, Paper, Typography, TextField, Button } from "@mui/material";
+import { Box, Grid2 as Grid, Paper, Typography, TextField, Button } from "@mui/material";
+
 import { useLocation } from "react-router-dom";
 import PermanentDrawerLeft from "../../Component/Drawer";
 import apiInstance from "../ApiInstance";
-
+import PropTypes from "prop-types"
 const ContactCard = ({ title, contactData, onUpdate, onDelete }) => {
     const [editable, setEditable] = useState(false);
     const [formData, setFormData] = useState(contactData);
@@ -23,58 +24,34 @@ const ContactCard = ({ title, contactData, onUpdate, onDelete }) => {
         onUpdate(formData);
         setEditable(false);
     };
+   
     const displayKey = (val)=>{
-        if(val ==="category"){
-            return "Type"
+        const keyMap = {
+            Category: "Type",
+            company:"Company",
+            firstname : "First Name",
+            lastname: "Last Name",
+            telephoneNumber: "Telephone Number",
+            faxNumber:"Fax Number",
+            email:"Email",
+            address1:"Address",
+            address2:"Address",
+            zipcode:"ZipCode",
+            city: "City",
+            state: "State",
+            country: "Country",
+            contactType: "Contact Type",
+            organizationType:"Organization Type",
+            organizationRegistrationNumber:"Organization Registration Number"
+            
         }
-        else if(val==="company"){
-            return "Company"
-        }
-        else if(val === "firstname"){
-            return "First Name"
-        }
-        else if(val === "lastname"){
-            return "Last Name"
-        } else if(val === "telephoneNumber"){
-            return "Telephone Number"
-        } else if(val === "faxNumber"){
-            return "Fax Number"
-        } else if(val === "email"){
-            return "Email"
-        } else if(val === "address1"){
-            return "Address"
-        }
-        else if(val === "address2"){
-            return "Address"
-        }else if(val === "zipcode"){
-            return "Zip Code"
-        }else if(val === "city"){
-            return "City"
-        }
-        else if(val === "state"){
-            return "State"
-        }else if(val === "country"){
-            return "Country"
-        }else if(val === "contactType"){
-            return "Contact Type"
-        }
-        else if(val === "organizationType"){
-            return "Organization Type"
-        }
-        else if(val === "organizationRegistrationNumber"){
-            return "Organization Registration Number"
-        }else{
-            return val
-        }
-
-
-
+        return keyMap[val] || val;
     }
 
     return (
         <Paper sx={{ p: 2,mb:2  }}>
             <Typography variant="h6" sx={{ mb: 2, textDecoration:"underline"}}>{title}</Typography>
-            <Grid container spacing={1}>
+            <Grid  spacing={2}>
   {Object.entries(formData).map(([key, value]) => {
     if (["_id", "__v", "userId"].includes(key)) return null;
     if (editable && key === "type") return null; 
@@ -113,12 +90,17 @@ const ContactCard = ({ title, contactData, onUpdate, onDelete }) => {
         </Paper>
     );
 };
+ContactCard.propTypes={
+    title: PropTypes.string,
+    contactData: PropTypes.string,
+    onUpdate: PropTypes.func.isRequired,
+    onDelete : PropTypes.func.isRequired,
+}
 
 const DetailContactListPage = () => {
     const [data, setData] = useState({});
     const location = useLocation();
     const { details } = location.state || {};
-const [type,setType] = useState("")
     const fetchList = async () => {
         try {
             const response = await apiInstance.post("get-contact-information", { contactid: details });
@@ -152,14 +134,19 @@ const [type,setType] = useState("")
             <PermanentDrawerLeft />
             <Box sx={{ flexGrow: 1, p: 3, mt: 7 }}>
                 <Typography sx={{ fontWeight: "700", fontSize: '28px', mb: 3 }}>Contact List</Typography>
-                <Grid container spacing={1}  sx={{mb:2}} className="DisplayBox">
+                <Grid  spacing={2}  sx={{mb:2}} className="DisplayBox">
                     {["Registrant","Admin","Billing","Technical"].map((type,i)=>(
                         data[type] && (
-                            <ContactCard
-                            contactData={data[type]}
-                            onUpdate={(updatedData) => handleUpdate(type, updatedData)}
-                            onDelete={() => handleDelete(type)}
-                        />
+
+                                    <Grid item xs={12} sm={6} md={6} key={`i${i + 1}`}>
+                                                                    <ContactCard
+                                    key={`i${i+1}`}
+                                    contactData={data[type]}
+                                    onUpdate={(updatedData) => handleUpdate(type, updatedData)}
+                                    onDelete={() => handleDelete(type)}
+                                />
+                                </Grid>
+
                         )
                     ))}
                 </Grid>
@@ -171,114 +158,5 @@ const [type,setType] = useState("")
 export default DetailContactListPage;
 
 
-                                        
-                                        {/* <FullDomainTable domainList={[{
-                                                "_id": "68024bc4d30ffe6772a1fc8a",
-                                                "userId": "67f8c40bbd985a5382c946ad",
-                                                "domainName": "domain121.com",
-                                                "WhoisPrivacy": false,
-                                                "registrationAgreementCheck": true,
-                                                "acceptedFAQ": true,
-                                                "nsList": [
-                                                    {
-                                                        "nsUrl": "acv.com",
-                                                        "_id": "68024bc4d30ffe6772a1fc8b"
-                                                    },
-                                                    {
-                                                        "nsUrl": "aacx.com",
-                                                        "_id": "68024bc4d30ffe6772a1fc8c"
-                                                    }
-                                                ],
-                                                "RegistrantId": "68024bb0d30ffe6772a1fc84",
-                                                "AdminId": "68024bb0d30ffe6772a1fc86",
-                                                "TechnicalId": "68024bb0d30ffe6772a1fc88",
-                                                "BillingId": "68024bb0d30ffe6772a1fc82",
-                                                "terms": "1 years",
-                                                "language": "4 Year(s)",
-                                                "__v": 0,
-                                                "Registrant": {
-                                                    "_id": "68024bb0d30ffe6772a1fc84",
-                                                    "company": "rapid",
-                                                    "firstname": "anas",
-                                                    "lastname": "khan",
-                                                    "telephoneNumber": "123123123",
-                                                    "faxNumber": "123123123",
-                                                    "email": "anask@gmail.com",
-                                                    "address1": "saddar",
-                                                    "address2": "saddar",
-                                                    "zipcode": "123123123",
-                                                    "city": "Karachi",
-                                                    "state": "Sindh",
-                                                    "country": "afaf",
-                                                    "contactType": "Organization",
-                                                    "organizationType": "afaf",
-                                                    "organizationRegistrationNumber": "123123123",
-                                                    "__v": 0
-                                                },
-                                                "Admin": {
-                                                    "_id": "68024bb0d30ffe6772a1fc86",
-                                                    "company": "rapid",
-                                                    "firstname": "anas",
-                                                    "lastname": "khan",
-                                                    "telephoneNumber": "12312313",
-                                                    "faxNumber": "12312313",
-                                                    "email": "anask@gmail.com",
-                                                    "address1": "saddar",
-                                                    "address2": "saddar",
-                                                    "zipcode": "123123123",
-                                                    "city": "karachi",
-                                                    "state": "sindh",
-                                                    "country": "afaf",
-                                                    "contactType": "Organization",
-                                                    "organizationType": "afaf",
-                                                    "organizationRegistrationNumber": "12312313",
-                                                    "__v": 0
-                                                },
-                                                "Technical": {
-                                                    "_id": "68024bb0d30ffe6772a1fc88",
-                                                    "company": "rapid",
-                                                    "firstname": "anas",
-                                                    "lastname": "khan",
-                                                    "telephoneNumber": "123132131",
-                                                    "faxNumber": "132123123",
-                                                    "email": "anask@gmail.com",
-                                                    "address1": "saddar",
-                                                    "address2": "saddar",
-                                                    "zipcode": "123123123",
-                                                    "city": "karachi",
-                                                    "state": "sindh",
-                                                    "country": "afaf",
-                                                    "contactType": "Organization",
-                                                    "organizationType": "afaf",
-                                                    "organizationRegistrationNumber": "1312313",
-                                                    "__v": 0
-                                                },
-                                                "Billing": {
-                                                    "_id": "68024bb0d30ffe6772a1fc82",
-                                                    "company": "rapid",
-                                                    "firstname": "anas",
-                                                    "lastname": "khan",
-                                                    "telephoneNumber": "3123123",
-                                                    "faxNumber": "1231313",
-                                                    "email": "anask@gmail.com",
-                                                    "address1": "saddar",
-                                                    "address2": "saddar",
-                                                    "zipcode": "1231231",
-                                                    "city": "karachi",
-                                                    "state": "sindh",
-                                                    "country": "afaf",
-                                                    "contactType": "Organization",
-                                                    "organizationType": "afaf",
-                                                    "organizationRegistrationNumber": "123123123",
-                                                    "__v": 0
-                                                }
-                                            }]} /> */}
-
-                    
-                        {/* {data.map((item, i) => (
-                            // <AccordionUsage key={i} Data={item} />
-                            <>
-                            </>
-                        ))} */}
-
+                      
 

@@ -92,6 +92,16 @@ function EnhancedTableHead({ onSelectAllClick, order, orderBy, numSelected, rowC
     </TableHead>
   );
 }
+EnhancedTableHead.propTypes = {
+  order: PropTypes.string,
+  orderBy: PropTypes.string.isRequired,
+  numSelected: PropTypes.number,
+onSelectAllClick: PropTypes.func.isRequired,
+rowCount:PropTypes.number,
+onRequestSort: PropTypes.func.isRequired,
+
+
+}
 
 function EnhancedTableToolbar({ numSelected, onDelete, onEdit }) {
   return (
@@ -118,9 +128,15 @@ function EnhancedTableToolbar({ numSelected, onDelete, onEdit }) {
     </Toolbar>
   );
 }
+EnhancedTableToolbar.propTypes={
+  numSelected: PropTypes.any,
+  onDelete: PropTypes.func.isRequired,
+  onEdit : PropTypes.func.isRequired,
+  
+}
 
 function renderAccordion(title, contact) {
-  if (!contact) return 'N/A';
+  if (!contact) return <p>N/A</p>;
   return (
     <Accordion>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>

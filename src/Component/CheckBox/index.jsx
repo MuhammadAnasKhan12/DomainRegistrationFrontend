@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Checkbox from '@mui/material/Checkbox';
-import { Typography } from '@mui/material';
 import "./index.css"
+import PropTypes from 'prop-types';
 export default function ControlledCheckbox({label,onCheckboxChange}) {
   const [checked, setChecked] = React.useState(false);
 
@@ -21,4 +21,9 @@ export default function ControlledCheckbox({label,onCheckboxChange}) {
     
     </div>
   );
+}
+
+ControlledCheckbox.propTypes={
+  label:PropTypes.any,
+  onCheckboxChange:PropTypes.func
 }

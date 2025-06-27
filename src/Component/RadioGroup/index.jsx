@@ -1,11 +1,9 @@
-import * as React from 'react';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
-
-export default function RadioButtonsGroup({list}) {
+import PropTypes from 'prop-types';
+ function RadioButtonsGroup({list}) {
   return (
     <FormControl>
       <RadioGroup
@@ -14,7 +12,7 @@ export default function RadioButtonsGroup({list}) {
         name="radio-buttons-group"
         > 
         {list.map((items,i)=>(
-            <FormControlLabel sx={{color:"gray",fontSize:'16px'}} value={items} control={<Radio />} label={items} />
+            <FormControlLabel key={i+1-1} sx={{color:"gray",fontSize:'16px'}} value={items} control={<Radio />} label={items} />
 
         ))}
        
@@ -22,3 +20,10 @@ export default function RadioButtonsGroup({list}) {
     </FormControl>
   );
 }
+
+RadioButtonsGroup.propTypes={
+  list:PropTypes.any,
+}
+
+export default RadioButtonsGroup;
+

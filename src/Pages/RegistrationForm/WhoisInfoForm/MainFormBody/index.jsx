@@ -1,4 +1,3 @@
-import React, { use, useEffect } from "react";
 import "./index.css"
 import TextField from '@mui/material/TextField';
 
@@ -9,16 +8,14 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
 import MenuItem from "@mui/material/MenuItem";
-import { Box, FormHelperText, Select } from "@mui/material";
-import { Button } from "@mui/material";
+import { FormHelperText, Select, Button } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import * as Yup from "yup";
-import { useFormikContext, Formik, Form, Field } from "formik";
+import { Formik, Form, Field } from "formik";
 import ErrorIcon from '@mui/icons-material/Error';
 import InputAdornment from "@mui/material/InputAdornment";
-
+import PropTypes from "prop-types";
 const validationSchema = Yup.object({
     company: Yup.string().required("Company is required"),
     firstname: Yup.string().required("First Name is required"),
@@ -53,7 +50,6 @@ const validationSchema = Yup.object({
     //     otherwise: Yup.string(),
 
     // }),
-    organizationRegistrationNumber: Yup.string().required("Organization Registration Number is required")
 })
 
 
@@ -92,9 +88,14 @@ function RowRadioButtons({ contacttype, defaultValue }) {
     );
 }
 
+RowRadioButtons.propTypes = {
+    contacttype: PropTypes.any,
+    defaultValue: PropTypes.any,
+}
+
 
 export default function MainFormBody({ formType, formdata, onFormChange }) {
-    const [contactype, setContactType] = useState("Organization")
+    const [contactType, setContactType] = useState("Organization")
 
     const ContactType = (val) => {
         setContactType(val)
@@ -114,32 +115,32 @@ export default function MainFormBody({ formType, formdata, onFormChange }) {
         onFormChange(formType, updatedFormData);
     };
 
-    
+
     const clearContact = (resetForm) => {
         const clearedFormData = {
-          company: "",
-          firstname: '',
-          lastname: '',
-          telephoneNumber: '',
-          faxNumber: '',
-          email: '',
-          address1: '',
-          address2: '',
-          zipcode: '',
-          city: '',
-          state: '',
-          country: '',
-          contactType: contactype,
-          organizationType: '',
-          organizationRegistrationNumber: '',
+            company: "",
+            firstname: '',
+            lastname: '',
+            telephoneNumber: '',
+            faxNumber: '',
+            email: '',
+            address1: '',
+            address2: '',
+            zipcode: '',
+            city: '',
+            state: '',
+            country: '',
+            contactType: contactType,
+            organizationType: '',
+            organizationRegistrationNumber: '',
         };
-    
+
         // Update parent state
         onFormChange(formType, clearedFormData);
-    
+
         // Reset Formik form
         resetForm();
-      };
+    };
     // console.log("adafa",formdata)
     return (
         <div className="MainFormBody">
@@ -154,13 +155,13 @@ export default function MainFormBody({ formType, formdata, onFormChange }) {
 
                         <div className="Header">
                             <Button onClick={() => clearContact(resetForm)}
- sx={{ color: "#fffff", backgroundColor: "#1F384C", fontSize: { xs: "9px", sm: "11px" } }} variant="contained" startIcon={<DeleteIcon />}>
+                                sx={{ color: "#fffff", backgroundColor: "#1F384C", fontSize: { xs: "9px", sm: "11px" } }} variant="contained" startIcon={<DeleteIcon />}>
                                 Clear Contact
                             </Button>
                         </div>
                         <div className="MainFormHead">
                             <p>Contact Type</p>
-                            <RowRadioButtons contacttype={ContactType} defaultValue={contactype} />
+                            <RowRadioButtons contacttype={ContactType} defaultValue={contactType} />
                         </div>
                         <div className="MainBody">
                             <div className="LeftCol">
@@ -476,35 +477,35 @@ export default function MainFormBody({ formType, formdata, onFormChange }) {
                                 <div className="InputFields">
 
                                     <FormControl fullWidth>
-                                    <InputLabel id="demo-simple-select-helper-label">Country</InputLabel>
+                                        <InputLabel id="demo-simple-select-helper-label">Country</InputLabel>
 
-                                    <Field
-                                        as={Select}
-                                        name="country"
-                                        label="Country"
-                                        className="CountyDiv"
-                                        value={formdata.country}
-                                        fullWidth
-                                        variant="outlined"
-
-                                        
-                                        onChange={(e) => {
-                                            handleChange(e);
-                                            handleFormChange(e.target.name, e.target.value);
-                                        }}
-
-                                        sx={{ color: "black" }}
+                                        <Field
+                                            as={Select}
+                                            name="country"
+                                            label="Country"
+                                            className="CountyDiv"
+                                            value={formdata.country}
+                                            fullWidth
+                                            variant="outlined"
 
 
-                                    >
-                                        <MenuItem value="please select" disabled>
-                                            --Please select--
-                                        </MenuItem>
-                                        <MenuItem value="afaf">afaf</MenuItem>
-                                        <MenuItem value="afaf">afaf</MenuItem>
-                                        <MenuItem value="afaf">afaf</MenuItem>
-                                        <MenuItem value="afaf">afaf</MenuItem>
-                                    </Field>
+                                            onChange={(e) => {
+                                                handleChange(e);
+                                                handleFormChange(e.target.name, e.target.value);
+                                            }}
+
+                                            sx={{ color: "black" }}
+
+
+                                        >
+                                            <MenuItem value="please select" disabled>
+                                                --Please select--
+                                            </MenuItem>
+                                            <MenuItem value="afaf">afaf</MenuItem>
+                                            <MenuItem value="afaf">afaf</MenuItem>
+                                            <MenuItem value="afaf">afaf</MenuItem>
+                                            <MenuItem value="afaf">afaf</MenuItem>
+                                        </Field>
                                     </FormControl>
 
                                     {touched.country && errors.country && (
@@ -521,41 +522,41 @@ export default function MainFormBody({ formType, formdata, onFormChange }) {
 
 
                         {
-                            contactype === "Organization" ? (
+                            contactType === "Organization" ? (
                                 <div className="GridTemp">
                                     <div className="LeftCol">
                                         <div className="InputFields">
-                            <FormControl fullWidth>
-                                    <InputLabel id="demo-simple-select-helper-label">Organization Type</InputLabel>
+                                            <FormControl fullWidth>
+                                                <InputLabel id="demo-simple-select-helper-label">Organization Type</InputLabel>
 
-                                    <Field
-                                        as={Select}
-                                        name="organizationType"
-                                        label="Organization Type"
-                                        className="CountyDiv"
-                                        value={formdata.organizationType}
-                                        fullWidth
-                                        variant="outlined"
-
-                                        
-                                        onChange={(e) => {
-                                            handleChange(e);
-                                            handleFormChange(e.target.name, e.target.value);
-                                        }}
-
-                                        sx={{ color: "black" }}
+                                                <Field
+                                                    as={Select}
+                                                    name="organizationType"
+                                                    label="Organization Type"
+                                                    className="CountyDiv"
+                                                    value={formdata.organizationType}
+                                                    fullWidth
+                                                    variant="outlined"
 
 
-                                    >
-                                        <MenuItem value="" disabled>
-                                            --Please select--
-                                        </MenuItem>
-                                        <MenuItem value="afaf">afaf</MenuItem>
-                                        <MenuItem value="afaf">afaf</MenuItem>
-                                        <MenuItem value="afaf">afaf</MenuItem>
-                                        <MenuItem value="afaf">afaf</MenuItem>
-                                    </Field>
-                                    </FormControl>
+                                                    onChange={(e) => {
+                                                        handleChange(e);
+                                                        handleFormChange(e.target.name, e.target.value);
+                                                    }}
+
+                                                    sx={{ color: "black" }}
+
+
+                                                >
+                                                    <MenuItem value="" disabled>
+                                                        --Please select--
+                                                    </MenuItem>
+                                                    <MenuItem value="afaf">afaf</MenuItem>
+                                                    <MenuItem value="afaf">afaf</MenuItem>
+                                                    <MenuItem value="afaf">afaf</MenuItem>
+                                                    <MenuItem value="afaf">afaf</MenuItem>
+                                                </Field>
+                                            </FormControl>
                                             {touched.organizationType && errors.organizationType && (
                                                 <FormHelperText error sx={{ fontSize: { sm: "12px" } }}>
 
@@ -645,7 +646,11 @@ export default function MainFormBody({ formType, formdata, onFormChange }) {
 
 
 
-
+MainFormBody.propTypes = {
+    formType: PropTypes.any,
+    formdata: PropTypes.any,
+    onFormChange: PropTypes.func.isRequired,
+}
 
 
 

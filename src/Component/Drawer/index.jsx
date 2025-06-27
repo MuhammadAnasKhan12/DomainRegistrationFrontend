@@ -2,17 +2,13 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import CssBaseline from '@mui/material/CssBaseline';
-import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import { useNavigate } from 'react-router-dom';
 import LogoutIcon from '@mui/icons-material/Logout';
 import apiInstance from "../../Pages/ApiInstance/index";
@@ -36,16 +32,7 @@ export default function PermanentDrawerLeft() {
   return (
     <Box sx={{ display: {xs:"none",sm:'flex'} }}>
       <CssBaseline />
-      {/* <AppBar
-        position="fixed"
-        sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px` }}
-      >
-        <Toolbar>
-          <Typography variant="h6" ma noWrap component="div">
-            Permanent drawer
-          </Typography>
-        </Toolbar>
-      </AppBar> */}
+      
       <Drawer
   sx={{
     width: drawerWidth,
@@ -74,7 +61,8 @@ export default function PermanentDrawerLeft() {
       {[
         { route: 'Domain Registration', src: "domain" },
         { route: "Domain List", src: "domainList" },
-        { route: 'Contact List', src: "contactlist" }
+        { route: 'Contact List', src: "contactlist" },
+        { route: "Upload File",src:"upload-file"}
       ].map((text) => (
         <ListItem key={text.route} disablePadding>
           <ListItemButton onClick={() => navigate(`/${text.src}`)}>

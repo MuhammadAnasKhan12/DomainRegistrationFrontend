@@ -1,16 +1,14 @@
-import React, { useCallback, useEffect } from "react";
+import { useCallback, useEffect ,useState} from "react";
 import { Box, Button, Typography } from "@mui/material";
 import PermanentDrawerLeft from "../../Component/Drawer";
 import "./index.css"
 import HorizontalStepper from "../../Component/Stepper";
-import { useState } from "react";
 import ReviewAndCheckout from "./ReviewCheckout";
 import WhoisInformation from "./WhoisInfoForm";
 import Confirm from "./Confirm";
 import RegisterDomainFooter from "../../Component/RegisterDomainFooter";
 import { toast, ToastContainer } from 'react-toastify'; 
 import 'react-toastify/dist/ReactToastify.css'; 
-import axios from "axios";
 import apiInstance from "../ApiInstance";
 import { useNavigate } from "react-router-dom";
 
@@ -26,10 +24,10 @@ const DomainRegistrationForm = () => {
   const [btndisable, setbtndisable] = useState(true);
   const [formData, setFormData] = useState({});
   const [footerData, setFooterData] = useState("");
-  const [completeDomainData,setcompleteDomainData] = useState({});
   const buttonDisable1 = (x) => {
     setbtndisable(x);
   }
+const [completeDomainData, setCompleteDomainData] = useState(null);
 
   const getDomainTermsLang = (val) => {
     setFooterData(val);
@@ -53,7 +51,7 @@ const DomainRegistrationForm = () => {
   
 console.log(formData)
 console.log(footerData)
-
+console.log(completeDomainData)
 
     for (let field of requiredFields) {
       if (!formData[field] || Object.values(formData[field]).some(value => value === null || value === undefined || value === "")) {
@@ -137,7 +135,7 @@ console.log(footerData)
           language: formData["language"]
         };
     
-        setcompleteDomainData(finalDomainData); 
+        setCompleteDomainData(finalDomainData); 
     
         try {
           const domainRes = await apiInstance.post("registerDomain", { form: finalDomainData });
@@ -169,8 +167,18 @@ console.log(footerData)
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
+  const renderStepContent = () => {
+  switch (activeStep) {
+    case 0:
+      return <ReviewAndCheckout handleFormData={handleFormData} buttonDisable={buttonDisable1} />;
+    case 1:
+      return <WhoisInformation handleFormData={handleFormData} />;
+    default:
+      return <Confirm formdata={formData} />;
+  }
+};
 
-  // console.log("main form data", formData);
+  
 
   return (
     <Box sx={{ display: 'flex', height  : "100%", minHeight: { sx: "100vh", sm: "100%" }, backgroundColor: "rgb(243, 245, 250)", position: "relative" }}>
@@ -185,19 +193,9 @@ console.log(footerData)
             <div className="borderbottom"></div>
             {/* form registration pages  */}
           </div>
-          {
-            // form page1
-            activeStep === 0 ? (
-              
-              <ReviewAndCheckout handleFormData={handleFormData} buttonDisable={buttonDisable1} />
-            ) : activeStep === 1 ? (
-              //form page2
-              <WhoisInformation handleFormData={handleFormData} />
-            ) : (
-              //form page3
-              <Confirm formdata={formData} />
-            )
-          }
+        
+          {renderStepContent()}
+          
 
           <Box sx={{ display: 'flex', justifyContent: 'center', gap: '10px', mt: 4, mb: 4 }}>
             <Button
@@ -219,7 +217,7 @@ console.log(footerData)
                       disabled={btndisable || activeStep === steps.length - 1}
                       >
                       Next
-                      </Button>
+                </Button>
                 
                 
               ) : (

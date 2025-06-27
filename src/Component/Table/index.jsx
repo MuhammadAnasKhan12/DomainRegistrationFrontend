@@ -1,7 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { alpha } from '@mui/material/styles';
-import axios from 'axios';
 import {
   Box,
   Table,
@@ -279,7 +278,12 @@ export default function EnhancedTable({ domainList, onDeleteDomain, onUpdateDoma
                     <TableCell padding="checkbox">
                       <Checkbox checked={isItemSelected} />
                     </TableCell>
-                    <TableCell  ><span style={{cursor:"pointer",fontWeight:"700"}} onClick={()=>handleDetailPage(row._id)}>{row.domainName}</span></TableCell>
+                    <TableCell  ><span >
+                      <button style={{cursor:"pointer",fontWeight:"700"}} onClick={()=>handleDetailPage(row._id)}>
+                      {row.domainName}
+
+                      </button>
+                      </span></TableCell>
                     <TableCell>{row.WhoisPrivacy ? 'Yes' : 'No'}</TableCell>
                     <TableCell>{row.registrationAgreementCheck ? 'Yes' : 'No'}</TableCell>
                     <TableCell>{row.acceptedFAQ ? 'Yes' : 'No'}</TableCell>
@@ -355,4 +359,5 @@ EnhancedTable.propTypes = {
   domainList: PropTypes.array.isRequired,
   onDeleteDomain: PropTypes.func.isRequired,
   onUpdateDomain: PropTypes.func.isRequired,
+  onOpenDetailPage: PropTypes.func.isRequired
 };

@@ -1,6 +1,7 @@
 import React, { useState,useEffect, useRef } from "react";
 import "./index.css"
 import MainFormBody from "./MainFormBody";
+import PropTypes from "prop-types";
 const WhoisInformation=({handleFormData})=>{
     const Formss= [
         "Registrant",
@@ -102,15 +103,6 @@ const WhoisInformation=({handleFormData})=>{
       }));
     };
     
-// // Only update the parent if FormData has changed
-// useEffect(() => {
-//   const hasDataChanged = JSON.stringify(FormData) !== JSON.stringify(prevFormData);
-  
-//   if (hasDataChanged) {
-//     handleFormData(FormData);  // Update the parent only when FormData has changed
-//   }
-// }, [FormData]); // Only run effect when FormData changes
-
       
     const prevFormDataRef = useRef();
     const prevFormData = prevFormDataRef.current; 
@@ -131,11 +123,16 @@ const WhoisInformation=({handleFormData})=>{
       <div className="FormHeader">
         {Formss.map((form, index) => (
           <li
-            key={index}
-            onClick={() => activeState(form)}
-            className={activeForm === form ? "ActiveLi" : "listitem"}
-          >
+            key={index+1}
+          className="list"
+  >
+    <button             
+    onClick={() => activeState(form)}
+    className={activeForm === form ? "ActiveLi" : "listitem"}
+>
             {form}
+
+    </button>
           </li>
         ))}
       </div>
@@ -173,89 +170,11 @@ const WhoisInformation=({handleFormData})=>{
 
     )
 }
+WhoisInformation.propTypes={
+  handleFormData:PropTypes.func.isRequired,
+}
 
 export  default WhoisInformation;
-
-
-
-
-
-
-
-
-// import React, { useState } from "react";
-// import RegistrantForm from "./Registrantform";
-// import MainFormBody from "./MainFormBody";
-// import { Button } from "@mui/material"; 
-// import DeleteIcon from "@mui/icons-material/Delete";
-
-// const WhoisInformation = () => {
-//   const Formss = ["Registrant", "Admin", "Technical", "Billing"];
-//   const [activeForm, setActiveForm] = useState("Registrant");
-//   const [formData, setFormData] = useState({
-//     Registrant: {},
-//     Admin: {},
-//     Technical: {},
-//     Billing: {},
-//   });
-
-//   const handleFormChange = (formType, newData) => {
-//     setFormData((prevData) => ({
-//       ...prevData,
-//       [formType]: newData,
-//     }));
-//   };
-
-//   const activeState = (formType) => {
-//     setActiveForm(formType);
-//   };
-
-//   return (
-    // <div className="MainForm">
-    //   <div className="FormHeader">
-    //     {Formss.map((form, index) => (
-    //       <li
-    //         key={index}
-    //         onClick={() => activeState(form)}
-    //         className={activeForm === form ? "ActiveLi" : "listitem"}
-    //       >
-    //         {form}
-    //       </li>
-    //     ))}
-    //   </div>
-    //   {activeForm === "Registrant" && (
-    //     <MainFormBody
-    //       formType="Registrant"
-    //       initialData={formData.Registrant}
-    //       onFormChange={handleFormChange}
-    //     />
-    //   )}
-    //   {activeForm === "Admin" && (
-    //     <MainFormBody
-    //       formType="Admin"
-    //       initialData={formData.Admin}
-    //       onFormChange={handleFormChange}
-    //     />
-    //   )}
-    //   {activeForm === "Technical" && (
-    //     <MainFormBody
-    //       formType="Technical"
-    //       initialData={formData.Technical}
-    //       onFormChange={handleFormChange}
-    //     />
-    //   )}
-    //   {activeForm === "Billing" && (
-    //     <MainFormBody
-    //       formType="Billing"
-    //       initialData={formData.Billing}
-    //       onFormChange={handleFormChange}
-    //     />
-    //   )}
-    // </div>
-//   );
-// };
-
-// export default WhoisInformation;
 
 
 

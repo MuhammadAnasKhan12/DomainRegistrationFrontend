@@ -1,16 +1,13 @@
 import React, { useState } from "react";
-import { Box, IconButton, TextField, Typography, List, ListItem, ListItemText } from "@mui/material";
-import SearchIcon from '@mui/icons-material/Search';
+import { Box, IconButton, TextField, Typography,  ListItem, ListItemText } from "@mui/material";
 import { useNavigate } from "react-router-dom"; // For navigation
 
 import PermanentDrawerLeft from "../../Component/Drawer";
 import "./index.css";
-import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
 
 const Domain = () => {
   const [searchItem, setSearchItem] = useState("");
   const [results, setResults] = useState([]);
-  const [selectedItem, setSelectedItem] = useState(null);
 
   const navigate = useNavigate();
 
@@ -44,7 +41,6 @@ const Domain = () => {
 
   const handleSelectItem = (item) => {
     setSearchItem(item);
-    setSelectedItem(item);
     navigate(`/domain/registration/${item}`);
   };
 
@@ -106,7 +102,7 @@ const Domain = () => {
         {results.length > 0 ? (
           <Box sx={{ width: "60%", backgroundColor: "white", borderRadius: "10px", height: "200px", overflowY: "scroll" }}>
             {results.map((item, index) => (
-              <ListItem  button key={index} onClick={() => handleSelectItem(item)}>
+              <ListItem  button key={`i-${index+1}-k`} onClick={() => handleSelectItem(item)}>
                 <ListItemText
                 sx={{pt:"0px"}}
                   primary={

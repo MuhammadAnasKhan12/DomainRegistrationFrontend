@@ -8,6 +8,7 @@ import DomainList from '../Pages/DomainList';
 import ContactListPage from '../Pages/ContactList';
 import ContactList from '../Pages/ContactsList';
 import DetailContactListPage from '../Pages/DetailContactPage';
+import FileUpload from '../Pages/UploadFile';
 function AppRouter() {
   return (
     <Router>
@@ -20,6 +21,7 @@ function AppRouter() {
           <Route path='/contactlist' element={<ContactList/>}/>
           <Route path='/contactDetails' element={<ContactListPage/>}/>
           <Route path='/contact-information' element={<DetailContactListPage/>}/>
+          <Route path='/upload-file' element={<FileUpload/>}/>
       </Routes>
     </Router>
   );

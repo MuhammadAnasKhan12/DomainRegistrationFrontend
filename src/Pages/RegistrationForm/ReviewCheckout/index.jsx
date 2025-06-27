@@ -3,6 +3,7 @@ import "./index.css"
 import { Link, useParams } from "react-router-dom";
 import ColorCheckboxes from "../../../Component/CheckBox";
 import { Typography } from "@mui/material";
+import PropTypes from "prop-types";
 import Accordian from "../../../Component/Accordian";
 const ReviewAndCheckout = ({buttonDisable,handleFormData}) => {
     const [checks,setChecks] = useState({
@@ -76,7 +77,7 @@ const ReviewAndCheckout = ({buttonDisable,handleFormData}) => {
 
 
     return (
-        <>
+    
             <div className="MainForm">
                 <div className="FormGrid">
                     <div className="FormLeftSide">
@@ -95,9 +96,13 @@ const ReviewAndCheckout = ({buttonDisable,handleFormData}) => {
                 </div>
 
             </div>
-        </>
+        
 
     )
+}
+ReviewAndCheckout.propTypes ={
+    buttonDisable:PropTypes.any,
+    handleFormData:PropTypes.func.isRequired,
 }
 
 export default ReviewAndCheckout;

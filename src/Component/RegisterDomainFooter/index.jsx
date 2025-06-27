@@ -1,13 +1,13 @@
 import { Box, Typography } from "@mui/material";
 import "./index.css"
-import { useCallback, useState } from "react";
-import React from "react";
+import React, { useCallback, useState } from "react";
+import PropTypes from "prop-types";
+
 const RegisterDomainFooter = React.memo(({getDomainTermsLang})=>{
     const [data, setData] = useState({
         "terms":null,
         "language":null,
     });
-
 
 
     const HandleTermsChange = useCallback((name,val) => {
@@ -30,11 +30,11 @@ const RegisterDomainFooter = React.memo(({getDomainTermsLang})=>{
         "English",
         "French",
         "Urdu",
-        
-
+    
+    
     ]
     return (
-        <>
+    
             <Box className={"RegisterFooter"}  >
                 <Typography sx={{ fontSize: { xs: "16px", sm: "18px", md: "19px" } }}>Register Domain </Typography>
                 <Typography sx={{ fontSize: { sm: "12px", md: "15px" }, color: "red", fontWeight: "600", marginBottom: "10px" }}>{"domain name"}</Typography>
@@ -56,7 +56,7 @@ const RegisterDomainFooter = React.memo(({getDomainTermsLang})=>{
                             onChange={(e) => HandleTermsChange("terms",e.target.value)}
                         >
                             {years.map((year, i) => (
-                                <option key={i}>{year}</option>
+                                <option key={i+1-1}>{year}</option>
                             ))}
                         </select>
                     </Box>
@@ -71,13 +71,17 @@ const RegisterDomainFooter = React.memo(({getDomainTermsLang})=>{
                     ><Typography sx={{ fontSize: "14px" }}>{`Language: `}</Typography>
                         <select onChange={(e) => HandleTermsChange("language",e.target.value)} style={{  marginLeft: "4px" }} className="FooterSelect" defaultValue={"English"}>
                             {language.map((lang, i) => (
-                                <option key={i}>{lang}</option>
+                                <option key={i+1-1}>{lang}</option>
                             ))}
                         </select>
                     </Box>
                 </Box>
             </Box>
-        </>
+        
     )
 })
+
+RegisterDomainFooter.propTypes = {
+    getDomainTermsLang: PropTypes.any,
+}
 export default RegisterDomainFooter;

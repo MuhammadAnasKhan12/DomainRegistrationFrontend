@@ -1,13 +1,10 @@
 import React from 'react';
-import { TextField, Button, Typography, Container, Grid, Box } from '@mui/material';
+import { TextField, Button, Typography, Container, Grid2 as Grid, Box } from '@mui/material';
 import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
 import './index.css';
-import { useNavigate } from 'react-router-dom';
-import CryptoJS from 'crypto-js';
+import { useNavigate,Link } from 'react-router-dom';
 import apiInstance from '../ApiInstance';
-
-const secretKey = 'my top secret';
 
 const signupValidationSchema = Yup.object({
   name: Yup.string().required('Name is required'),
@@ -24,8 +21,6 @@ const SignupPage = () => {
 
   const SignUp = async (values) => {
     try {
-      // const jsonstring = JSON.stringify(values);
-      // const encryptedData = CryptoJS.AES.encrypt(jsonstring, secretKey).toString();
 
       const response = await apiInstance.post('signup', { values });
       if(response.status === 201){
@@ -131,17 +126,13 @@ const SignupPage = () => {
                           error={touched.role && Boolean(errors.role)}
                         />
                       </Grid>
-                      <Grid sx={{ marginTop: '-10px' }} item>
-                        <p>
+
+                        <Grid sx={{ marginTop: "-20px",mt:"1px" }} item>
+<p>
                           Already have an account? |{' '}
-                          <span
-                            onClick={() => navigate('/')}
-                            style={{ color: 'blue', cursor: 'pointer' }}
-                          >
-                            Sign in
-                          </span>
-                        </p>
-                      </Grid>
+  <Link to="/" style={{ color: "blue" ,cursor:'pointer'}}>Sign In</Link>
+</p>
+                    </Grid>
                       <Grid item>
                         <Button
                           type="submit"

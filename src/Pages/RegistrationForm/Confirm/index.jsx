@@ -1,45 +1,19 @@
-import React from "react";
 import "./index.css"
-import { Grid, Paper, Typography } from "@mui/material";
+import {    Typography } from "@mui/material";
 import { useState } from "react";
 import Accordion from '@mui/material/Accordion';
-import AccordionActions from '@mui/material/AccordionActions';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import Button from '@mui/material/Button';
 
-
+import PropTypes from "prop-types";
 const Formss = [
     "Registrant",
     "Admin",
     "Technical",
     "Billing"
 ]
-
-
-function AccordionUsage({Data}) {
-
-    // console.log("anasssssss",Data)
-
-    const [activeForm, setActiveForm] = useState("Registrant");
-    const [expanded, setExpanded] = useState(['panel1', 'panel2']); 
-
-    const handleAccordionChange = (panel) => (event, isExpanded) => {
-        setExpanded((prevExpanded) =>
-            isExpanded
-                ? [...prevExpanded, panel] 
-                : prevExpanded.filter((p) => p !== panel) 
-        );
-    };
-
-
-
-    const activeState = (elem) => {
-        setActiveForm(elem)
-    }
-
-    const Dataform = ({originalData}) => {
+ const Dataform = ({ originalData }) => {
         return (
             <div className="AccFormDiv">
                 <div className="AccFormGrid">
@@ -88,6 +62,36 @@ function AccordionUsage({Data}) {
         )
     }
 
+    Dataform.propTypes = {
+        originalData: PropTypes.any,
+    }
+
+function AccordionUsage({ Data }) {
+
+    // console.log("anasssssss",Data)
+
+    const [activeForm, setActiveForm] = useState("Registrant");
+    const [expanded, setExpanded] = useState(['panel1', 'panel2']);
+
+const updateExpandedPanels = (prevExpanded, panel, isExpanded) => {
+    return isExpanded
+        ? [...prevExpanded, panel]
+        : prevExpanded.filter((p) => p !== panel);
+};
+
+const handleAccordionChange = (panel) => {
+    return (event, isExpanded) => {
+        setExpanded((prevExpanded) => updateExpandedPanels(prevExpanded, panel, isExpanded));
+    };
+};
+   
+
+    const activeState = (elem) => {
+        setActiveForm(elem)
+    }
+
+   
+
     return (
         <div>
             <Accordion defaultExpanded expanded={expanded.includes('panel1')}
@@ -96,7 +100,7 @@ function AccordionUsage({Data}) {
                 <AccordionSummary
                     sx={{
                         backgroundColor: "#eeee",
-                        color: expanded === 'panel1' ? "red" : "black",
+                        color: expanded == 'panel1' ? "red" : "black",
                     }}
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1-content"
@@ -106,12 +110,11 @@ function AccordionUsage({Data}) {
                 </AccordionSummary>
                 <AccordionDetails>
                     <div className="Grid">
-                        {/* {console.log("dadadad",Data)} */}
                         {
-                        Data.nsList.map((x,i)=>(
-                            <div className="GridListItem"><li><Typography>{x.nsUrl}</Typography></li></div>
+                            Data.nsList.map((x, i) => (
+                                <div key={i+2} className="GridListItem"><li><Typography>{x.nsUrl}</Typography></li></div>
 
-                        ))
+                            ))
                         }
                     </div>
                 </AccordionDetails>
@@ -123,7 +126,7 @@ function AccordionUsage({Data}) {
                 <AccordionSummary
                     sx={{
                         backgroundColor: "#eeee",
-                        color: expanded === 'panel2' ? "red" : "black",
+                        color: expanded == 'panel2' ? "red" : "black",
                     }}
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel2-content"
@@ -134,17 +137,19 @@ function AccordionUsage({Data}) {
                 <AccordionDetails>
                     <div className="FormHeader">
                         {Formss.map((form, index) => (
-                            <li
-                                key={index}
-                                onClick={() => activeState(form)}
-                                className={activeForm === form ? "ActiveLi" : "listitem"}
-                            >
-                                {form}
+                            <li key={index+1} className="listitem">
+                                <button
+                                    onClick={() => activeState(form)}
+                                    className={activeForm === form ? "ActiveLi" : ""}
+                                >
+                                    {form}
+                                </button>
                             </li>
+
                         ))}
                     </div>
                     {
-                        activeForm === "Registrant" && (<Dataform originalData={Data?.Registrant}/>)
+                        activeForm === "Registrant" && (<Dataform originalData={Data?.Registrant} />)
                     }
                     {
                         activeForm === "Admin" && (<Dataform originalData={Data?.Admin} />)
@@ -162,45 +167,52 @@ function AccordionUsage({Data}) {
     );
 }
 
+AccordionUsage.propTypes = {
+    Data: PropTypes.any,
+
+}
 
 
-const Confirm = ({formdata}) => {
+const Confirm = ({ formdata }) => {
     // console.log("abasasd",formdata)
 
     return (
-        <>
-            <div className="MainForm">
-                <div className="table-container">
-                    <table className="custom-table">
-                        <thead>
-                            <tr>
-                                <th><Typography >Domain</Typography></th>
-                                <th><Typography >Price</Typography></th>
 
-                            </tr>
-                        </thead>
-                        <tbody >
-                            <tr>
-                                <td><Typography sx={{ fontSize: { xs: '12px', sm: '14px', md: '15px' } }} style={{ fontWeight: "600" }}>{formdata.domainName}</Typography></td>
-                                <td><Typography sx={{ fontSize: { xs: '12px', sm: '14px', md: '15px' } }}>{`USD 5.00`}</Typography></td>
-                            </tr>
-                            <tr className="Row">
-                                <td></td>
-                                <td className="usdtd"><Typography sx={{ fontSize: { xs: '12px', sm: '14px', md: '15px' } }} style={{ color: "green", fontSize: "18px", fontWeight: "600" }}>{`USD 5.00`}</Typography></td>
-                            </tr>
-                        </tbody>
-                    </table>
+        <div className="MainForm">
+            <div className="table-container">
+                <table className="custom-table">
+                    <thead>
+                        <tr>
+                            <th><Typography >Domain</Typography></th>
+                            <th><Typography >Price</Typography></th>
 
-                    <AccordionUsage Data={formdata}/>
+                        </tr>
+                    </thead>
+                    <tbody >
+                        <tr>
+                            <td><Typography sx={{ fontSize: { xs: '12px', sm: '14px', md: '15px' } }} style={{ fontWeight: "600" }}>{formdata.domainName}</Typography></td>
+                            <td><Typography sx={{ fontSize: { xs: '12px', sm: '14px', md: '15px' } }}>{`USD 5.00`}</Typography></td>
+                        </tr>
+                        <tr className="Row">
+                            <td></td>
+                            <td className="usdtd"><Typography sx={{ fontSize: { xs: '12px', sm: '14px', md: '15px' } }} style={{ color: "green", fontSize: "18px", fontWeight: "600" }}>{`USD 5.00`}</Typography></td>
+                        </tr>
+                    </tbody>
+                </table>
 
-                </div>
+                <AccordionUsage Data={formdata} />
 
             </div>
-        </>
+
+        </div>
 
     )
 }
 
+
+Confirm.propTypes = {
+    formdata: PropTypes.any,
+}
 export default Confirm;
 
 

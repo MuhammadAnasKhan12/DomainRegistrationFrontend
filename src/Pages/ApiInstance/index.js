@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useState } from "react";
 import CryptoJS from "crypto-js";
 
 const secretkey = "my top secret";

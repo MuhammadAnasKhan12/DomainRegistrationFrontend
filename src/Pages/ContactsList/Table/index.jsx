@@ -25,8 +25,6 @@ import {
   TextField,
   Button
 } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 
@@ -184,7 +182,7 @@ export default function EnhancedTable({ domainList, onDeleteDomain, onUpdateDoma
             <TableBody>
               {visibleRows.map((row) => (
                 <TableRow hover key={row._id}>
-                  <TableCell><span style={{fontWeight:"600", cursor:"pointer"}} onClick={()=>onOpenDetailPage(row._id)}>{row._id}</span></TableCell>
+                  <TableCell><span ><button onClick={()=>onOpenDetailPage(row._id)} style={{fontWeight:"600", cursor:"pointer"}} >{row._id}</button></span></TableCell>
                   <TableCell>{row.category}</TableCell>
                   <TableCell>{row.company}</TableCell>
                   <TableCell>{`${row.firstname} ${row.lastname}`}</TableCell>

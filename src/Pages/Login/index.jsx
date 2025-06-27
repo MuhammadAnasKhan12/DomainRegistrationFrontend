@@ -1,18 +1,16 @@
-import React, { useState } from 'react';
-import { TextField, Button, Typography, Container, Grid, Box } from '@mui/material';
+import { TextField, Button, Typography, Container, Grid2, Box } from '@mui/material';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';     
 import "./index.css";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,Link } from 'react-router-dom';
 import CryptoJS from 'crypto-js';
-import axios from 'axios';
 import apiInstance from "../ApiInstance";
 const secretKey = "my top secret"
 const loginValidationSchema = Yup.object({
   email: Yup.string().email('Invalid email address').required('Email is required'),
   password: Yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
 });
-import { toast, ToastContainer } from 'react-toastify'; 
+import { toast } from 'react-toastify'; 
 import 'react-toastify/dist/ReactToastify.css'; 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -21,7 +19,7 @@ const LoginPage = () => {
   const login = async(values)=>{
     try {
       const response = await apiInstance.post(`login`, values);
-        const bytes = CryptoJS.AES.decrypt(response.data, secretKey);
+      const bytes = CryptoJS.AES.decrypt(response.data, secretKey);
       const decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
       console.log("Decrypted Data: ", decryptedData);
   
@@ -55,9 +53,9 @@ const LoginPage = () => {
             >
               {({ isSubmitting, touched, errors }) => (
                 <Form>
-                  <Grid container direction="column" spacing={2}>
+                  <Grid2 container direction="column" spacing={2}>
                     {/* Email Field */}
-                    <Grid item>
+                    <Grid2 item>
                       <Field
                         as={TextField}
                         name="email"
@@ -67,9 +65,9 @@ const LoginPage = () => {
                         helperText={<ErrorMessage name="email" />}
                         error={touched.email && !!errors.email} 
                       />
-                    </Grid>
+                    </Grid2>
 
-                    <Grid item>
+                    <Grid2 item>
                       <Field
                         as={TextField}
                         name="password"
@@ -80,13 +78,16 @@ const LoginPage = () => {
                         helperText={<ErrorMessage name="password" />}
                         error={touched.password && !!errors.password} 
                       />
-                    </Grid>
+                    </Grid2>
 
-                    <Grid sx={{ marginTop: "-20px",mt:"1px" }} item>
-                      <p>Don't have an account? | <span onClick={() => navigate("/signup")} style={{ color: "blue", cursor: "pointer" }}>Sign Up</span> </p>
-                    </Grid>
+                    <Grid2 sx={{ marginTop: "-20px",mt:"1px" }} item>
+<p>
+  Don't have an account? | 
+  <Link to="/signup" style={{ color: "blue" ,cursor:'pointer'}}>Sign Up</Link>
+</p>
+                    </Grid2>
 
-                    <Grid item>
+                    <Grid2 item>
                       <Button 
                         type="submit"
                         variant="contained"
@@ -98,9 +99,9 @@ const LoginPage = () => {
 
                       </Button>
 
-                    </Grid>
+                    </Grid2>
 
-                  </Grid>
+                  </Grid2>
                 </Form>
               )}
             </Formik>

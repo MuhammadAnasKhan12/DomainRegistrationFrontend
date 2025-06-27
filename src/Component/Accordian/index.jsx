@@ -1,42 +1,34 @@
 import * as React from 'react';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import "./index.css"
 import { useState } from 'react';
-import { Button, colors, TextField } from '@mui/material';
 import ControlledCheckbox from '../CheckBox';
-// import RadioButtonsGroup from '../RadioGroup';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import { List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
-import { useNavigate } from 'react-router-dom';
-import Divider from '@mui/material/Divider';
+import { Button, FormControlLabel} from '@mui/material';
 import Drawer from '@mui/material/Drawer';
-import { Field } from 'formik';
 import CloseIcon from '@mui/icons-material/Close';
 
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormLabel from '@mui/material/FormLabel';
-
+import PropTypes from 'prop-types';
+import apiInstance from '../../Pages/ApiInstance';
 function BasicSelect({ listitem ,handleRegistrantId}) {
     const [registrant,setregistrant] = useState("")
     const handleChange = (event) => {
         setregistrant(event.target.value)
         handleRegistrantId(event.target.value)
     };
+
+    
 
     return (
         <Box sx={{ minWidth: "100%",fontSize:"14px" }}>
@@ -51,7 +43,7 @@ function BasicSelect({ listitem ,handleRegistrantId}) {
                         -- Please select --
                     </MenuItem>
                     {listitem.map((item, i) => (
-                        <MenuItem onChange={handleChange} value={item}>{item}</MenuItem>
+                        <MenuItem key={i+1-1} onChange={handleChange} value={item.registrantName}>{item.registrantName}</MenuItem>
 
                     ))}
                 </Select>
@@ -59,7 +51,10 @@ function BasicSelect({ listitem ,handleRegistrantId}) {
         </Box>
     );
 }
-
+BasicSelect.propTypes={
+    listitem:PropTypes.any,
+    handleRegistrantId:PropTypes.any
+}
 
 function RadioButtonsGroup({ handleRadioButton }) {
     const [selectedValue, setSelectedValue] = useState("Monthly");
@@ -69,9 +64,7 @@ function RadioButtonsGroup({ handleRadioButton }) {
     };
 
 
-    const handleDrawer = () => {
-        handleRadioButton(true);
-    };
+    
     const  handleClick=(name,val)=>{
         setselectedWebnicNs({
             [name]:val
@@ -154,7 +147,8 @@ function RadioButtonsGroup({ handleRadioButton }) {
                             >
 
                                 {["Monthly", "Annually"].map((item, i) => (
-                                    <MenuItem sx={{
+                                    <MenuItem key ={i+1-1} sx={{
+                                        
                                         color: 'gray',
                                         fontSize: '13px',
                                         '& .MuiFormControlLabel-label': {
@@ -175,6 +169,9 @@ function RadioButtonsGroup({ handleRadioButton }) {
     );
 }
 
+RadioButtonsGroup.propTypes={
+    handleRadioButton:PropTypes.any
+}
 
 
 export default function Accordian({getAccordianData}) {
@@ -188,13 +185,18 @@ export default function Accordian({getAccordianData}) {
 
     })
 
-    const handleAccordionChange = (panel) => (event, isExpanded) => {
-        setExpanded((prevExpanded) =>
-            isExpanded
-                ? [...prevExpanded, panel]
-                : prevExpanded.filter((p) => p !== panel)
-        );
+ 
+const updateExpandedPanels = (prevExpanded, panel, isExpanded) => {
+    return isExpanded
+        ? [...prevExpanded, panel]
+        : prevExpanded.filter((p) => p !== panel);
+};
+
+const handleAccordionChange = (panel) => {
+    return (event, isExpanded) => {
+        setExpanded((prevExpanded) => updateExpandedPanels(prevExpanded, panel, isExpanded));
     };
+};
 
     const [open, setOpen] = React.useState(false);
     const [openPremiumNS, setopenPremiumNS] = React.useState(false);
@@ -216,11 +218,7 @@ export default function Accordian({getAccordianData}) {
             WHOIS Privacy Subscription
         </Typography>
     );
-    const NSitems = [
-        "Basic NS",
-        "Premium NS",
-        "Premium Single with Georoute"
-    ]
+   
     const AddNS = () => {
         setNsList([...nsList, { nsUrl: "" }]);
     }
@@ -277,28 +275,50 @@ export default function Accordian({getAccordianData}) {
         return SubcribeNow.term === "1 Month" ? "10.00" : "120.00";
     };
 
+    const [registrantName,setregistrantName] = useState({
+        registrantName:'',
+
+    });
+    const handleRegistrantInput=(name,value)=>{
+        const updateData = {[name]:value}
+        setregistrantName(updateData)
+    }
+
+    const hanldeSubmitRegistrant = async()=>{
+        try {
+            const response = await apiInstance.post("create-registrant",registrantName)
+            if(response.status===200){
+                window.location.reload();
+
+            }
+            
+        } catch (error) {
+            console.log("error in registering registrant",error)
+        }
+    }
+
 
     const DrawerList = (
-        <Box sx={{ width: 400, p: 3 }} role="presentation" >
+        <Box sx={{ width: 400, p: 3 }}  >
             <Box sx={{ display: "flex", width: "100%", justifyContent: "space-between", alignItems: "center" }}>
                 <Typography sx={{ color: "black", fontWeight: 600, fontSize: "18px" }}>Create Registrant Account</Typography>
                 <CloseIcon onClick={toggleDrawer(false)} sx={{ cursor: "pointer" }} />
             </Box>
             <Box sx={{ mt: 4 }}>
                 <Typography sx={{ color: "#989695", fontSize: "14px", }}>Username</Typography>
-                <input placeholder="please enter username" className='usernameInputField' />
+                <input value={registrantName.registrantName} onChange={(e)=>handleRegistrantInput(e.target.name,e.target.value)} name={"registrantName"} placeholder="please enter username" className='usernameInputField' />
 
             </Box>
             <Box>
                 <Typography sx={{ color: "#989695", fontSize: "14px", mt: "10px" }}>Password</Typography>
                 <Typography sx={{ color: "#989695", fontSize: "14px", mt: "10px", lineHeight: "15px" }}>Password will be generated automatically by the system.</Typography>
-                <Button variant="contained" sx={{ width: "100%", mt: 4, fontSize: "13px", backgroundColor: "#1F384C" }}>Craete Acount</Button>
+                <Button onClick={hanldeSubmitRegistrant} variant="contained" sx={{ width: "100%", mt: 4, fontSize: "13px", backgroundColor: "#1F384C" }}>Create Account</Button>
             </Box>
         </Box>
     );
 
     const SubcribeNowDrawer = (
-        <Box sx={{ width: 400, p: 2.7, mt: 2 }} role="presentation" >
+        <Box sx={{ width: 400, p: 2.7, mt: 2 }} >
             <Box sx={{ display: "flex", width: "100%", justifyContent: "space-between", alignItems: "center" }}>
                 <Typography sx={{ color: "black", fontWeight: 600, fontSize: "18px" }}>Subscribe Now</Typography>
                 <CloseIcon onClick={toggleDrawer(false)} sx={{ cursor: "pointer" }} />
@@ -417,6 +437,22 @@ export default function Accordian({getAccordianData}) {
     },[nsList,accordianData.RegistrantId,accordianData.WhoisPrivacy])
     
 
+    const [listItem,setListItem] = useState([]);
+    const fetchregistrantIds = async()=>{
+        try {
+            const response =await apiInstance.post("get-registrant-names") ;
+            setListItem(response.data);
+
+        } catch (error) {
+            console.log("error in fetching registrant ids",error)
+        }
+    }
+    React.useEffect(()=>{
+        fetchregistrantIds();
+    },[])
+
+    console.log(listItem);
+
     return (
 
         <div>
@@ -428,7 +464,7 @@ export default function Accordian({getAccordianData}) {
 
                     sx={{
                         backgroundColor: "#eeee",
-                        color: expanded === 'panel1' ? "red" : "black",
+                        color: expanded == 'panel1' ? "red" : "black",
                     }}
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel2-content"
@@ -449,7 +485,6 @@ export default function Accordian({getAccordianData}) {
 
                     {
                         activeNS === "WebNIC NS" ? (
-                            <>
                                 <Box sx={{ width: "100%" }} className='WebNICDiv'>
                                     <RadioButtonsGroup handleRadioButton={handleRadioButton} />
                                     <Drawer open={openPremiumNS} onClose={() => toggleDrawer2(false)}>
@@ -457,12 +492,10 @@ export default function Accordian({getAccordianData}) {
                                     </Drawer>
 
                                 </Box>
-                            </>
                         ) : (
-                            <>
                                 <div className='CustomNS'>
                                     {nsList.map((item, index) => (
-                                        <div key={index} className='nsinputdiv'>
+                                        <div key={index+1-1} className='nsinputdiv'>
                                             <input
                                                 placeholder='ns.example.com'
                                                 value={item.nsUrl}
@@ -474,7 +507,6 @@ export default function Accordian({getAccordianData}) {
 
                                     <button onClick={AddNS} className='AddNSBtn'><AddIcon /></button>
                                 </div>
-                            </>
                         )
                     }
                 </div>
@@ -483,7 +515,7 @@ export default function Accordian({getAccordianData}) {
                 <AccordionSummary
                     sx={{
                         backgroundColor: "#eeee",
-                        color: expanded === 'panel2' ? "red" : "black",
+                        color: expanded == 'panel2' ? "red" : "black",
                     }}
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel2-content"
@@ -499,8 +531,8 @@ export default function Accordian({getAccordianData}) {
                         </Drawer>
                     </div>
                     <div>
-                        <Typography sx={{ color: '#1F384C', fontWeight: "550", color: "gray", fontSize: "13px", mt: 2, mb: 1 }}>User ID</Typography>
-                        <BasicSelect handleRegistrantId={handleRegistrantId} listitem={["Demouser123", "Rapid123", "Testcustomer", "testuserdemo1"]} />
+                        <Typography sx={{ color: '#1F384C', fontWeight: "550",  fontSize: "13px", mt: 2, mb: 1 }}>User ID</Typography>
+                        <BasicSelect handleRegistrantId={handleRegistrantId} listitem={listItem} />
 
                     </div>
                 </div>
@@ -513,4 +545,7 @@ export default function Accordian({getAccordianData}) {
 
         </div>
     );
+}
+Accordian.propTypes={
+    getAccordianData:PropTypes.any,
 }
